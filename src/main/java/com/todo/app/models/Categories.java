@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +33,7 @@ public class Categories {
 	@NotNull
 	private String name;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "categories", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Tasks> listOfTasksOfCategorie;
 	

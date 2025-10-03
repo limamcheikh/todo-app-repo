@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.todo.app.models.Priorities;
 import com.todo.app.models.User;
 import com.todo.app.repository.UserRepository;
 
@@ -14,39 +15,38 @@ public class UserService {
 
 	
 	
-	private final UserRepository repository;
+	private final UserRepository userrepository;
 	
-	public UserService(UserRepository repository) {
-		this.repository = repository;
+	public UserService(UserRepository userrepository) {
+		this.userrepository = userrepository;
 	}
 	
 	
 	public User createUser(User user) {
 		
-		return repository.save(user);
+		return userrepository.save(user);
 	}
 	
 	public List<User> getAllUsers(){
-		return repository.findAll();
+		return userrepository.findAll();
 	}
 	
 	public User getUserById(String userId) {
-		return repository.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
+		return userrepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
 	}
 	
-	public List<User> getUserByUsername(String username) {
-		return repository.findByName(username);
-	}
-	
-    public User getOneUserByName(String name) {
-        return repository.findByName(name)
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("User with name '" + name + "' not found"));
+    public User findOrCreateByName(User user) {
+        // Try to find the priority first (case-insensitive)
+    	String username = user.getName();
+        return userrepository.findByNameIgnoreCase(username)
+                .orElseGet(() -> {
+                    // Create new entity if not found
+                    User newuser = new User();
+                    newuser.setName(username);
+                    return userrepository.save(newuser); // save managed entity
+                });
     }
     
-    public List<User> getUsersByGivingName(String name){
-    	return repository.findByNameStartingWith(name);
-    }
+    
 	
 }

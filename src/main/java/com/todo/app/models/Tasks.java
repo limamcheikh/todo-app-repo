@@ -1,9 +1,16 @@
 package com.todo.app.models;
 
-import java.sql.Date;
+
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,9 +39,10 @@ public class Tasks {
 	private String description;
 	private boolean completed;
 	
-	@NotNull(message = "the date cannot be empty please")
-	@FutureOrPresent(message = "the date must be grater or equal the current date")
-	private Date dueDate;
+	
+	//@FutureOrPresent(message = "the date must be grater or equal the current date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date  dueDate;
 	
 	@ManyToOne
 	private User user;
@@ -59,7 +67,7 @@ public class Tasks {
 
 	public Tasks(@NotNull(message = "the Title cannot be empty please") @NotBlank String title, String description,
 			boolean completed,
-			@NotNull(message = "the date cannot be empty please") @FutureOrPresent(message = "the date must be grater or equal the current date") Date dueDate) {
+			@NotNull(message = "the date cannot be empty please") @FutureOrPresent(message = "the date must be grater or equal the current date") Date  dueDate) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -169,7 +177,16 @@ public class Tasks {
 
 	
 	
-	
+	public void printAsJson() {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			// Convert this object to JSON string
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+			System.out.println(json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
