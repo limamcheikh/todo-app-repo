@@ -71,11 +71,21 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
+		
+		<!--juint test -->
+		
+		    <!-- Spring Boot Starter Test -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
 
 
 	</dependencies>
 
 	<build>
+		<finalName>todo-rest-demo</finalName>
 		<plugins>
 			<!-- Compiler plugin -->
 			<plugin>
