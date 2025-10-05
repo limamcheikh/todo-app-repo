@@ -51,4 +51,11 @@ public class TaskService {
 		 taskRepository.deleteById(taskId);
 	}
 
+
+	public Tasks getTaskById(String taskId) {
+		// TODO Auto-generated method stub
+		return taskRepository.findById(taskId)
+											 .orElse(null);
+	}
+
 }

@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.app.dto.TaskDTO;
+import com.todo.app.dto.UpdateTaskRequest;
 import com.todo.app.models.Categories;
 import com.todo.app.models.Priorities;
 import com.todo.app.models.Tasks;
@@ -92,6 +94,36 @@ public class TaskController {
     		return ResponseEntity.noContent().build();
     	}catch(Exception e) {
     		return ResponseEntity.notFound().build();
+    	}
+    	
+    }
+    
+    @PutMapping(value = "/update")
+    public ResponseEntity<Tasks> update(@RequestBody UpdateTaskRequest updateTask){
+    	
+    	
+    	updateTask.printAsJson();
+    	
+    	String taskId = updateTask.getTaskId();
+    	
+    	try {
+    		
+    		
+    		Tasks taskUpdated = taskservice.getTaskById(taskId);
+    		
+    		taskUpdated.setTitle(updateTask.getTitle());
+    		taskUpdated.setDescription(updateTask.getDescription());
+    		taskUpdated.setDueDate(updateTask.getDueDate());
+    		taskUpdated.setCategories(updateTask.getCategories());
+    		taskUpdated.setPriorities(updateTask.getPriorities());
+    		
+    		Tasks t = taskservice.CreateTask(taskUpdated);
+    		
+    		return ResponseEntity.ok(t);
+    		
+    		
+    	}catch(Exception e) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
     	
     }
