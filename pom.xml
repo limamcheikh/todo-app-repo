@@ -3,91 +3,96 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Parent POM - Spring Boot Starter Parent -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	
+	<!-- Project Coordinates -->
 	<groupId>com.todo</groupId>
 	<artifactId>todo-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>auth-backend-1</name>
-	<description>a crupt application</description>
-	<url />
-	<licenses>
-		<license />
-	</licenses>
-	<developers>
-		<developer />
-	</developers>
-	<scm>
-		<connection />
-		<developerConnection />
-		<tag />
-		<url />
-	</scm>
+	<description>A todo application with authentication backend</description>
+	
+	<!-- Project Properties -->
 	<properties>
+		<!-- Java Version -->
 		<java.version>17</java.version>
+		
+		<!-- SonarQube Configuration -->
+		<sonar.projectKey>todo-app</sonar.projectKey>
+		<sonar.projectName>Todo App</sonar.projectName>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
 	</properties>
+	
+	<!-- Project Dependencies -->
 	<dependencies>
+		<!-- Spring Boot Starter for JPA (Database Access) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
+		<!-- Spring Boot Starter for Validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		
+		<!-- Spring Boot Starter for Web (REST APIs) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		
+		<!-- Lombok - Reduces boilerplate code -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
+		
+		<!-- MySQL Connector - Database Driver -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
+		
+		<!-- Spring Boot DevTools - Hot Reload during development -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-
+		
+		<!-- Jackson JSR310 - Java 8 Date/Time support for JSON -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
-
-		<!--juint test -->
-
-		<!-- Spring Boot Starter Test -->
+		
+		<!-- Spring Boot Starter Test - Testing Framework (JUnit, Mockito, etc.) -->
+		<!-- NOTE: Removed duplicate declaration that was causing the warning -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
 	</dependencies>
-
+	
+	<!-- Build Configuration -->
 	<build>
+		<!-- Final JAR name -->
 		<finalName>todo-rest-demo</finalName>
+		
 		<plugins>
-			<!-- Compiler plugin -->
+			<!-- Maven Compiler Plugin - Compiles Java source code -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -95,6 +100,7 @@
 				<configuration>
 					<source>17</source>
 					<target>17</target>
+					<!-- Annotation processors for Lombok -->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -104,23 +110,19 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
-			<!-- Spring Boot plugin -->
+			
+			<!-- Spring Boot Maven Plugin - Packages application as executable JAR -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-			<!-- sonar qube plugin -->
-
+			
+			<!-- SonarQube Maven Plugin - Code quality analysis -->
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
-				<version>4.5.0.2216</version> <!-- Latest stable -->
+				<version>4.5.0.2216</version>
 			</plugin>
-
 		</plugins>
 	</build>
-
-
 </project>
