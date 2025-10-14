@@ -92,6 +92,7 @@ public class TaskDTO {
 			// Convert this object to JSON string
 			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
 			System.out.println(json);
+			System.out.println("----");
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
